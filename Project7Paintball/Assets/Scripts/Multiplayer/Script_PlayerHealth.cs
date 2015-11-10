@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Script_PlayerHealth : NetworkBehaviour {
 
-    float seconds = 0;
     [SyncVar(hook = "OnHealthChange")]
     private int health = 100;
     private Text healthText;
