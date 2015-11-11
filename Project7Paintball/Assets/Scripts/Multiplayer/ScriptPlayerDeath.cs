@@ -40,7 +40,6 @@ public class ScriptPlayerDeath : NetworkBehaviour {
         {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = false;
-            GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
             crossHairImage.enabled = false;
             //Respawn Button Needs to Appear.
         }
