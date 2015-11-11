@@ -52,21 +52,21 @@ public class Script_PlayerHealth : NetworkBehaviour {
 
     void SetHealthText()
     {
+        Vector2 tempSize = new Vector2((health / 100f), 1);
         if (isLocalPlayer)
         {
             healthText.text = "Health: " + health.ToString();
-            Vector2 tempSize = new Vector2((health / 100f), 1);
-            healthBar.transform.localScale = tempSize;
-            Debug.Log(healthBar.transform.localScale = tempSize);
             CmdUpdateHealthBar(tempSize);
         }
+        
+        healthBar.transform.localScale = tempSize;
+        
     }
 
     [Command]
     void CmdUpdateHealthBar(Vector2 tempAnchor)
     {
         healthBar.transform.localScale = tempAnchor;
-        
     }
 
     public void DeductHealth(int dmg)
