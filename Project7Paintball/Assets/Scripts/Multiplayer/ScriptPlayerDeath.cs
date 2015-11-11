@@ -23,9 +23,9 @@ public class ScriptPlayerDeath : NetworkBehaviour {
 
     void DisablePlayer()
     {
-        GetComponent<CharacterController>().enabled = false;
-        GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
         GetComponent<ScriptPlayerShoot>().enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
 
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
@@ -38,6 +38,8 @@ public class ScriptPlayerDeath : NetworkBehaviour {
 
         if (isLocalPlayer)
         {
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = false;
             crossHairImage.enabled = false;
             //Respawn Button Needs to Appear.
         }

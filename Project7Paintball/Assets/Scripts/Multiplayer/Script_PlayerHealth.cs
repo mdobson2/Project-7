@@ -9,10 +9,10 @@ using UnityEngine.UI;
 /// </summary>
 public class Script_PlayerHealth : NetworkBehaviour {
 
-    float seconds = 0;
     [SyncVar(hook = "OnHealthChange")]
     private int health = 100;
     private Text healthText;
+    public GameObject healthBar;
 
     private bool shouldDie = false;
     public bool isDead = false;
@@ -55,7 +55,18 @@ public class Script_PlayerHealth : NetworkBehaviour {
         if (isLocalPlayer)
         {
             healthText.text = "Health: " + health.ToString();
+            Vector2 tempSize = new Vector2((health / 100f), 1);
+            healthBar.transform.localScale = tempSize;
+            Debug.Log(healthBar.transform.localScale = tempSize);
+            CmdUpdateHealthBar(tempSize);
         }
+    }
+
+    [Command]
+    void CmdUpdateHealthBar(Vector2 tempAnchor)
+    {
+        healthBar.transform.localScale = tempAnchor;
+        
     }
 
     public void DeductHealth(int dmg)
