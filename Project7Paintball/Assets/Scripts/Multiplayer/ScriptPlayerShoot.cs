@@ -44,7 +44,6 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     {
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.tag);
             if (hit.transform.tag == "Player")
             {
                 string uIdentity = hit.transform.name;

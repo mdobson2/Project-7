@@ -52,6 +52,7 @@ public class Script_PlayerSync : NetworkBehaviour {
     void CmdSetName(string pName)
     {
         myName = pName;
+        aboveHeadName.text = myName;
     }
 
     void Start()
@@ -70,8 +71,6 @@ public class Script_PlayerSync : NetworkBehaviour {
             CmdSetName(myName);
         }
         aboveHeadName.text = myName;
-
-
     }
 
     void FixedUpdate()

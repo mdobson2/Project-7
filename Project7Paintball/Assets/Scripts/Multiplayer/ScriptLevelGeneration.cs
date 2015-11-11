@@ -30,8 +30,6 @@ public class ScriptLevelGeneration : NetworkBehaviour
 
     string testLevel = "";
 
-    bool levelGenerated = false;
-
     //List<GameObject> floorObjects = new List<GameObject>();
     //List<GameObject> wallObjects = new List<GameObject>();
     //List<GameObject> randomObjects = new List<GameObject>();
