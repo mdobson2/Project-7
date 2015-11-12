@@ -17,11 +17,11 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     private RaycastHit hit;
     public GameObject splat;
 
-    ScriptGameManager_References gameManager;
+    private RaycastHit hit;
 
 	// Use this for initialization
 	void Start () {
-        gameManager = GameObject.Find("GameManager").GetComponent<ScriptGameManager_References>();
+	
 	}
 	
 	// Update is called once per frame
@@ -51,6 +51,7 @@ public class ScriptPlayerShoot : NetworkBehaviour {
             Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
             GameObject tempParticle = (GameObject)Instantiate(gameManager.splatParticle, hit.point, Quaternion.identity);
             tempParticle.transform.rotation = Quaternion.Euler(reflectVec);
+
             if (hit.transform.tag == "Player")
             {
                 string uIdentity = hit.transform.name;
