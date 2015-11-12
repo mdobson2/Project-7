@@ -14,12 +14,13 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     private float range = 200;
     [SerializeField]
     private Transform camTransform;
-
     private RaycastHit hit;
+
+    ScriptGameManager_References gameManager;
 
 	// Use this for initialization
 	void Start () {
-	
+        gameManager = GameObject.Find("GameManager").GetComponent<ScriptGameManager_References>();
 	}
 	
 	// Update is called once per frame
@@ -44,6 +45,7 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     {
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
+            Instantiate(gameManager.splatParticle, hit.point, Quaternion.identity);
             if (hit.transform.tag == "Player")
             {
                 string uIdentity = hit.transform.name;
