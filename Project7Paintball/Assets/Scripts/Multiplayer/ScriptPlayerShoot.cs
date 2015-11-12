@@ -45,7 +45,14 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     {
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
+<<<<<<< HEAD
             Instantiate(gameManager.splatParticle, hit.point, Quaternion.identity);
+=======
+            Vector3 incomingVec = hit.point - transform.position;
+            Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
+            GameObject tempParticle = (GameObject)Instantiate(gameManager.splatParticle, hit.point, Quaternion.identity);
+            tempParticle.transform.rotation = Quaternion.Euler(reflectVec);
+>>>>>>> refs/remotes/origin/Respawning
             if (hit.transform.tag == "Player")
             {
                 string uIdentity = hit.transform.name;
