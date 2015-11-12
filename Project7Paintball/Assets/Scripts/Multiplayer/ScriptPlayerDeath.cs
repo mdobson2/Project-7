@@ -18,7 +18,7 @@ public class ScriptPlayerDeath : NetworkBehaviour {
 	
     void OnDisable()
     {
-        healthScript.EventDie -= DisablePlayer;
+        //healthScript.EventDie -= DisablePlayer;
     }
 
     void DisablePlayer()
