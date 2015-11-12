@@ -22,12 +22,16 @@ public class ScriptFlagCatch : MonoBehaviour {
     {
         if(!isCarryFlag)
         {
-            if(other.transform.parent.tag == "BlueFlag" || other.transform.parent.tag == "RedFlag")
+            if(other.transform.parent != null)
             {
-                other.transform.parent.gameObject.SetActive(false);
-                SetFlagCarry(true);
-                SetFlagColor(other.transform.parent.tag);
+                if (other.transform.parent.tag == "BlueFlag" || other.transform.parent.tag == "RedFlag")
+                {
+                    other.transform.parent.gameObject.SetActive(false);
+                    SetFlagCarry(true);
+                    SetFlagColor(other.transform.parent.tag);
+                }
             }
+
         }
     }
 

@@ -20,6 +20,9 @@ public class Script_PlayerHealth : NetworkBehaviour {
     public delegate void DieDelegate();
     public event DieDelegate EventDie;
 
+    public delegate void RespawnDelegate();
+    public event RespawnDelegate EventRespawn;
+
     void Start()
     {
         healthText = GameObject.Find("Health Text").GetComponent<Text>();
@@ -47,6 +50,16 @@ public class Script_PlayerHealth : NetworkBehaviour {
             }
 
             shouldDie = false;
+        }
+
+        if(health > 0 && isDead)
+        {
+            if(EventRespawn != null)
+            {
+                EventRespawn();
+            }
+
+            isDead = false;
         }
     }
 
@@ -78,5 +91,10 @@ public class Script_PlayerHealth : NetworkBehaviour {
     {
         health = hlth;
         SetHealthText();
+    }
+
+    public void ResetHealth()
+    {
+        health = 100;
     }
 }

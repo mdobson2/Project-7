@@ -14,8 +14,8 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     private float range = 200;
     [SerializeField]
     private Transform camTransform;
-
     private RaycastHit hit;
+    public GameObject splat;
 
 	// Use this for initialization
 	void Start () {
@@ -44,6 +44,12 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     {
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
+            Instantiate(splat, hit.point, Quaternion.identity);
+            Vector3 incomingVec = hit.point - transform.position;
+            Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
+            GameObject tempParticle = (GameObject)Instantiate(splat, hit.point, Quaternion.identity);
+            tempParticle.transform.rotation = Quaternion.Euler(reflectVec);
+
             if (hit.transform.tag == "Player")
             {
                 string uIdentity = hit.transform.name;

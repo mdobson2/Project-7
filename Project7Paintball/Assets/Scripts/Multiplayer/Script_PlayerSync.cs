@@ -69,6 +69,8 @@ public class Script_PlayerSync : NetworkBehaviour {
             GameObject manager = GameObject.Find("Network Manager");
             myName = manager.GetComponent<ScriptMyName>().myName;
             CmdSetName(myName);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         aboveHeadName.text = myName;
     }
