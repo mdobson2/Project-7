@@ -38,7 +38,7 @@ public class Script_MenuState : MonoBehaviour {
     public GameObject mainMenu;                             //A reference to the main menu game object for menu navigation
     public GameObject connectMenu;                          //A reference to the connect menu game object for menu navigation
     public GameObject setupMenu;                            //A reference to the setup menu game object for menu navigation
-    public NetworkManager manager;                          //A reference to the network manager for managing connections
+    public ScriptWallaballNetworkManager manager;                          //A reference to the network manager for managing connections
 
     // Use this for initialization
     void Start () {

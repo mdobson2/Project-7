@@ -18,7 +18,8 @@ public class Script_PlayerSync : NetworkBehaviour {
     [SyncVar]
     public string myName;
 
-    string level;
+    [SyncVar]
+    public Color color;
 
     [Header("\tReference Values")]
     public Transform myTransform;
