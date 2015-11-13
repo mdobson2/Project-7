@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// @Author: Andrew Seba
+/// @Description: Enables all the player componenets that were disabled in the
+/// ScriptPlayerDeath.
+/// </summary>
 public class ScriptPlayerRespawn : NetworkBehaviour {
 
     private Script_PlayerHealth healthScript;
@@ -50,6 +55,9 @@ public class ScriptPlayerRespawn : NetworkBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = true;
             crossHairImage.enabled = true;
+            respawnButton.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 

@@ -71,6 +71,7 @@ public class Script_PlayerSync : NetworkBehaviour {
             CmdSetName(myName);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
         }
         aboveHeadName.text = myName;
     }

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// @Author: Mike
+/// </summary>
 public class ScriptFlagCatch : MonoBehaviour {
 
     bool isCarryFlag = false;

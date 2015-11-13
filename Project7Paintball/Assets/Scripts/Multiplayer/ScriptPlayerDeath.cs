@@ -41,7 +41,10 @@ public class ScriptPlayerDeath : NetworkBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = false;
             crossHairImage.enabled = false;
-            //Respawn Button Needs to Appear.
+            GameObject.Find("GameManager").GetComponent<ScriptGameManager_References>().respawnButton.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

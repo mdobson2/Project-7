@@ -8,7 +8,8 @@ using System.Collections;
 /// of the game object hit, then sends a command to the server and find the
 /// identity and apply damage amount.
 /// </summary>
-public class ScriptPlayerShoot : NetworkBehaviour {
+public class ScriptPlayerShoot : NetworkBehaviour
+{
 
     private int damage = 25;
     private float range = 200;
@@ -17,15 +18,11 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     private RaycastHit hit;
     public GameObject splat;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         CheckifShooting();
-	}
+    }
 
     void CheckifShooting()
     {
@@ -44,11 +41,8 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     {
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
-            Instantiate(splat, hit.point, Quaternion.identity);
-            Vector3 incomingVec = hit.point - transform.position;
-            Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
-            GameObject tempParticle = (GameObject)Instantiate(splat, hit.point, Quaternion.identity);
-            tempParticle.transform.rotation = Quaternion.Euler(reflectVec);
+            
+            CmdTellServerAboutInstantiate(hit.point);
 
             if (hit.transform.tag == "Player")
             {
@@ -59,6 +53,13 @@ public class ScriptPlayerShoot : NetworkBehaviour {
     }
 
     [Command]
+    void CmdTellServerAboutInstantiate(Vector3 pos)
+    {
+        GameObject tempSplat = (GameObject)Instantiate(splat, pos, Quaternion.identity);
+        NetworkServer.Spawn(tempSplat);
+    }
+
+    [Command]
     void CmdTellServerWhoWasShot(string pIdentity, int pDamage)
     {
         Debug.Log("I shot");
@@ -66,4 +67,5 @@ public class ScriptPlayerShoot : NetworkBehaviour {
         go.GetComponent<Script_PlayerHealth>().DeductHealth(pDamage);
         //Apply damage to that player.
     }
+
 }
