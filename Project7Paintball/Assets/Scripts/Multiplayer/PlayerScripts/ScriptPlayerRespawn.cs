@@ -52,7 +52,7 @@ public class ScriptPlayerRespawn : NetworkBehaviour {
 
         if (isLocalPlayer)
         {
-            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().useGravity = true;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = true;
             crossHairImage.enabled = true;
             respawnButton.gameObject.SetActive(false);

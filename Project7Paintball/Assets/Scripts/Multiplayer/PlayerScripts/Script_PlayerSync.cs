@@ -2,7 +2,6 @@
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// @Author: Andrew Seba
 /// @Description: Syncs player movement across the network.
@@ -72,7 +71,11 @@ public class Script_PlayerSync : NetworkBehaviour {
             CmdSetName(myName);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
+            GameObject.Find("SpectatorCamera").SetActive(false);
+            if(GameObject.Find("ButtonStartGame") != null)
+            {
+                GameObject.Find("ButtonStartGame").SetActive(false);
+            }
         }
         aboveHeadName.text = myName;
     }
