@@ -27,14 +27,30 @@ public class ScriptPlayerRespawn : NetworkBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
+    void OnDisable()
+    {
+        healthScript.EventRespawn -= EnablePlayer;
+    }
 
     void EnablePlayer()
     {
+        GetComponent<ScriptPlayerShoot>().enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<CapsuleCollider>().enabled = true;
 
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in renderers)
+        {
+            rend.enabled = true;
+        }
+
+        if (isLocalPlayer)
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = true;
+            crossHairImage.enabled = true;
+        }
     }
 
     void CommenceRespawn()
