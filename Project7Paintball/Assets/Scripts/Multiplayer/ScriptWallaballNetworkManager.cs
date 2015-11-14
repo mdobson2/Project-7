@@ -69,16 +69,26 @@ public class ScriptWallaballNetworkManager : NetworkManager {
             
             //Set his team blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform.position
             player.GetComponent<ScriptPlayerTeam>().myTeam = aboutToSpawn.tempTeam;
+
+            
             if (player.GetComponent<ScriptPlayerTeam>().myTeam == Team.BLUE)
             {
-                player.transform.position = blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform.position;
+
+                Transform spawnPosition;
+                spawnPosition = blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform;
+                player.transform.position = spawnPosition.position;
+                player.transform.rotation = spawnPosition.rotation;
             }
-            if (player.GetComponent<ScriptPlayerTeam>().myTeam == Team.RED)
+            else if (player.GetComponent<ScriptPlayerTeam>().myTeam == Team.RED)
             {
-                player.transform.position = redSpawnPoints[Random.Range(0, redSpawnPoints.Length)].transform.position;
+                Transform spawnPosition;
+                spawnPosition = redSpawnPoints[Random.Range(0, redSpawnPoints.Length)].transform;
+                player.transform.position = spawnPosition.position;
+                player.transform.rotation = spawnPosition.rotation;
             }
             NetworkServer.AddPlayerForConnection(aboutToSpawn.networkConn, player, aboutToSpawn.playerControllerId);
         }
+
         inProgress = true;
     }
 
