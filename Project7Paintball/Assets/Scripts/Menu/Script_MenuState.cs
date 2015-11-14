@@ -38,7 +38,7 @@ public class Script_MenuState : MonoBehaviour {
     public GameObject mainMenu;                             //A reference to the main menu game object for menu navigation
     public GameObject connectMenu;                          //A reference to the connect menu game object for menu navigation
     public GameObject setupMenu;                            //A reference to the setup menu game object for menu navigation
-    public NetworkManager manager;                          //A reference to the network manager for managing connections
+    public ScriptWallaballNetworkManager manager;                          //A reference to the network manager for managing connections
 
     // Use this for initialization
     void Start () {
@@ -135,50 +135,50 @@ public class Script_MenuState : MonoBehaviour {
             case MenuStates.MENU_MAIN:
                 if (CurrentState == MenuStates.MENU_CONNECT)
                 {
-                    Debug.Log("Transition from Main to Connect");
+                    //Debug.Log("Transition from Main to Connect");
                     mainMenu.SetActive(false);
                     connectMenu.SetActive(true);
                 }
                 else if (CurrentState == MenuStates.MENU_SETUP)
                 {
-                    Debug.Log("Transistion from Main to Start");
+                    //Debug.Log("Transistion from Main to Start");
                     mainMenu.SetActive(false);
                     setupMenu.SetActive(true);
                 }
                 else if(CurrentState == MenuStates.MENU_QUITTING)
                 {
-                    Debug.Log("Transition from Main to Quit");
+                    //Debug.Log("Transition from Main to Quit");
                     Application.Quit();
                 }
                 break;
             case MenuStates.MENU_CONNECT:
                 if(CurrentState == MenuStates.MENU_MAIN)
                 {
-                    Debug.Log("Transition from Connect to Main");
+                    //Debug.Log("Transition from Connect to Main");
                     connectMenu.SetActive(false);
                     mainMenu.SetActive(true);
                 }
                 else if(CurrentState == MenuStates.CONNECT_CONNECTING_TO_SERVER)
                 {
-                    Debug.Log("Transition from Connect to Connecting to Server");
+                    //Debug.Log("Transition from Connect to Connecting to Server");
                     manager.StartClient();
                 }
                 break;
             case MenuStates.MENU_SETUP:
                 if(CurrentState == MenuStates.MENU_MAIN)
                 {
-                    Debug.Log("Transition from Start to Main");
+                    //Debug.Log("Transition from Start to Main");
                     setupMenu.SetActive(false);
                     mainMenu.SetActive(true);
                 }
                 else if(CurrentState == MenuStates.SETUP_STARTING_SERVER)
                 {
-                    Debug.Log("Transitioning from Start to Server Starting");
+                    //Debug.Log("Transitioning from Start to Server Starting");
                     manager.StartServer();
                 }
                 else if(CurrentState == MenuStates.SETUP_STARTING_HOST)
                 {
-                    Debug.Log("Transitioning from Start to Host Starting");
+                    //Debug.Log("Transitioning from Start to Host Starting");
                     manager.StartHost();
                 }
                 break;

@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
 
 /// <summary>
 /// @Author: Andrew Seba
 /// @Description: Makes sure the transform is facing the camera at all times.
 /// </summary>
-public class ScriptBillboard : MonoBehaviour {
+public class ScriptBillboard : NetworkBehaviour {
 
     public Transform playerCamera;
+
+    void Start()
+    {
+        playerCamera = Camera.main.transform;
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -20,7 +26,7 @@ public class ScriptBillboard : MonoBehaviour {
         }
         else
         {
-            playerCamera = GameObject.Find("MainCamera").transform;
+            playerCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         }
 
     }
