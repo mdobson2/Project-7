@@ -15,7 +15,10 @@ public class ScriptGameManager_References : MonoBehaviour {
 
     void Start()
     {
-        manager = GameObject.Find("Network Manager").GetComponent<ScriptWallaballNetworkManager>();
+        if (GameObject.Find("Network Manager") != null)
+            manager = GameObject.Find("Network Manager").GetComponent<ScriptWallaballNetworkManager>();
+        else
+            Debug.Log("You need to start the game in the title scene.");
         
     }
 

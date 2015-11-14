@@ -13,17 +13,20 @@ using UnityEngine.Networking;
 public class ScriptWallaballNetworkManager : NetworkManager {
 
     
-    private GameObject[] blueSpawnPoints;
+
     public GameObject spectatorPrefab;
 
     private bool inProgress = false;
     private List<ScriptConnectedPlayer> connectedPlayers = new List<ScriptConnectedPlayer>();
     private List<GameObject> spectators = new List<GameObject>();
+    private GameObject[] blueSpawnPoints;
+    private GameObject[] redSpawnPoints;
 
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
         blueSpawnPoints = GameObject.FindGameObjectsWithTag("BlueSpawn");
+        redSpawnPoints = GameObject.FindGameObjectsWithTag("RedSpawn");
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
@@ -62,9 +65,18 @@ public class ScriptWallaballNetworkManager : NetworkManager {
         //Spawn All the players
         foreach(ScriptConnectedPlayer aboutToSpawn in connectedPlayers)
         {
-            var player = (GameObject)GameObject.Instantiate(playerPrefab, blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform.position, Quaternion.identity);
-            //Set his team
+            var player = (GameObject)GameObject.Instantiate(playerPrefab, transform.position, Quaternion.identity);
+            
+            //Set his team blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform.position
             player.GetComponent<ScriptPlayerTeam>().myTeam = aboutToSpawn.tempTeam;
+            if (player.GetComponent<ScriptPlayerTeam>().myTeam == Team.BLUE)
+            {
+                player.transform.position = blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform.position;
+            }
+            if (player.GetComponent<ScriptPlayerTeam>().myTeam == Team.RED)
+            {
+                player.transform.position = redSpawnPoints[Random.Range(0, redSpawnPoints.Length)].transform.position;
+            }
             NetworkServer.AddPlayerForConnection(aboutToSpawn.networkConn, player, aboutToSpawn.playerControllerId);
         }
         inProgress = true;
