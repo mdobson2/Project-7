@@ -6,15 +6,16 @@ using System.Collections;
 /// </summary>
 public class ScriptFlagCatch : MonoBehaviour {
 
-    bool isCarryFlag = false;
+    public bool isCarryFlag = false;
     public GameObject carryFlag;
     public Material redFlag;
     public Material blueFlag;
+    public GameObject flagPrefab;
 
     public GameObject blueBase;
     public GameObject redBase;
 
-    bool carryBlueFlag = false;
+    public bool carryBlueFlag = false;
 	// Use this for initialization
 	void Start () {
         if (GameObject.FindGameObjectWithTag("BlueBase"))
@@ -54,6 +55,7 @@ public class ScriptFlagCatch : MonoBehaviour {
                     other.transform.parent.gameObject.SetActive(false);
                     SetFlagCarry(true);
                     SetFlagColor(other.transform.parent.tag);
+                    //other.GetComponentInParent<ScriptTeamBase>().CatchFlag();
                     if(other.transform.parent.tag == "BlueFlag")
                     {
                        carryBlueFlag = true;
@@ -62,23 +64,6 @@ public class ScriptFlagCatch : MonoBehaviour {
                     {
                         carryBlueFlag = false;
                     }
-                }
-            }
-        }
-        if(isCarryFlag)
-        {
-            if(carryBlueFlag)
-            {
-                if(other.transform.tag == "RedBase")
-                {
-                    SetFlagCarry(false);
-                }
-            }
-            else
-            {
-                if(other.transform.tag == "BlueBase")
-                {
-                    SetFlagCarry(false);
                 }
             }
         }
@@ -116,5 +101,10 @@ public class ScriptFlagCatch : MonoBehaviour {
         {
             carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = blueFlag;
         }
+    }
+
+    public void DropFlag()
+    {
+        //Instantiate(flagPrefab, transform.position, Quaternion.identity);
     }
 }
