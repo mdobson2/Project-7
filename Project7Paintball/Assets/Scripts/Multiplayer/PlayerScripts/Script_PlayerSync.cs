@@ -47,6 +47,9 @@ public class Script_PlayerSync : NetworkBehaviour {
     Vector3 lastPlayerPosition;
     #endregion
 
+    //probably shouldn't be in this script
+    bool pauseMenu = false;
+
 
     [Command]
     void CmdSetName(string pName)
@@ -71,8 +74,12 @@ public class Script_PlayerSync : NetworkBehaviour {
             CmdSetName(myName);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            GameObject.Find("SpectatorCamera").SetActive(false);
-            if(GameObject.Find("ButtonStartGame") != null)
+
+            //disable SpectatorCamera
+            if (GameObject.Find("SpectatorCamera"))
+                GameObject.Find("SpectatorCamera").SetActive(false);
+
+            if (GameObject.Find("ButtonStartGame") != null)
             {
                 GameObject.Find("ButtonStartGame").SetActive(false);
             }
@@ -96,6 +103,24 @@ public class Script_PlayerSync : NetworkBehaviour {
         {
             LerpRotation();
             LerpPosition();
+        }
+
+
+        //lets you gain curor visibility to escape
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (pauseMenu)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            pauseMenu = !pauseMenu;
         }
 	}
 
