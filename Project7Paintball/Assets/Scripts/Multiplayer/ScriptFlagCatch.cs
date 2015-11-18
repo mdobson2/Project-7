@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 /// <summary>
 /// @Author: Mike
 /// </summary>
-public class ScriptFlagCatch : MonoBehaviour {
+public class ScriptFlagCatch : NetworkBehaviour {
 
+    [SyncVar]
     public bool isCarryFlag = false;
     public GameObject carryFlag;
     public Material redFlag;
@@ -55,7 +57,7 @@ public class ScriptFlagCatch : MonoBehaviour {
                     other.transform.parent.gameObject.SetActive(false);
                     SetFlagCarry(true);
                     SetFlagColor(other.transform.parent.tag);
-                    //other.GetComponentInParent<ScriptTeamBase>().CatchFlag();
+
                     if(other.transform.parent.tag == "BlueFlag")
                     {
                        carryBlueFlag = true;
@@ -67,6 +69,12 @@ public class ScriptFlagCatch : MonoBehaviour {
                 }
             }
         }
+    }
+
+    [Command]
+    void CmdTellServerAboutFlag(bool pValue)
+    {
+        isCarryFlag = pValue;
     }
 
     public void SetFlagCarry(bool state)
