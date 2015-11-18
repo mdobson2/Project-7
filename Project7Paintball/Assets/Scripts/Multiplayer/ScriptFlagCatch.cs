@@ -9,6 +9,7 @@ public class ScriptFlagCatch : NetworkBehaviour {
 
     [SyncVar]
     public bool isCarryFlag = false;
+    [SyncVar]
     public GameObject carryFlag;
     public Material redFlag;
     public Material blueFlag;
@@ -17,6 +18,7 @@ public class ScriptFlagCatch : NetworkBehaviour {
     public GameObject blueBase;
     public GameObject redBase;
 
+    [SyncVar]
     public bool carryBlueFlag = false;
 	// Use this for initialization
 	void Start () {
@@ -47,9 +49,10 @@ public class ScriptFlagCatch : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(!isCarryFlag)
+
+        if (!isCarryFlag)
         {
-            if(other.transform.parent != null)
+            if (other.transform.parent != null)
             {
                 if (other.transform.parent.tag == "BlueFlag" || other.transform.parent.tag == "RedFlag")
                 {
@@ -58,23 +61,26 @@ public class ScriptFlagCatch : NetworkBehaviour {
                     SetFlagCarry(true);
                     SetFlagColor(other.transform.parent.tag);
 
-                    if(other.transform.parent.tag == "BlueFlag")
+                    if (other.transform.parent.tag == "BlueFlag")
                     {
-                       carryBlueFlag = true;
+                        carryBlueFlag = true;
                     }
                     else
                     {
                         carryBlueFlag = false;
                     }
+                    CmdSetCarryBlueFlagBool(carryBlueFlag);
+
                 }
             }
         }
+
     }
 
     [Command]
-    void CmdTellServerAboutFlag(bool pValue)
+    void CmdSetCarryBlueFlagBool(bool pValue)
     {
-        isCarryFlag = pValue;
+        carryBlueFlag = pValue;
     }
 
     public void SetFlagCarry(bool state)
@@ -84,6 +90,7 @@ public class ScriptFlagCatch : NetworkBehaviour {
 
         if(carryFlag != null)
         {
+            //Maybe just change to carryFlag.SetActive(state); -Seba
             if(state)
             {
                 carryFlag.SetActive(true);
@@ -92,6 +99,8 @@ public class ScriptFlagCatch : NetworkBehaviour {
             {
                 carryFlag.SetActive(false);
             }
+            if(isLocalPlayer)
+                CmdSetCarryFlag(state);
         }
         else
         {
@@ -99,16 +108,31 @@ public class ScriptFlagCatch : NetworkBehaviour {
         }
     }
 
+    [Command]
+    void CmdSetCarryFlag(bool pValue)
+    {
+        carryFlag.SetActive(pValue);
+    }
+
     public void SetFlagColor(string colorKey)
     {
         if(colorKey == "RedFlag")
         {
             carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = redFlag;
+            CmdSetFlagColor(redFlag);
         }
         else
         {
             carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = blueFlag;
+            CmdSetFlagColor(blueFlag);
         }
+        
+    }
+
+    [Command]
+    void CmdSetFlagColor(Material pMat)
+    {
+        carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = pMat;
     }
 
     public void DropFlag()

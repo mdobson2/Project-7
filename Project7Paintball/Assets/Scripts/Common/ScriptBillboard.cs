@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 
 
 /// <summary>
 /// @Author: Andrew Seba
 /// @Description: Makes sure the transform is facing the camera at all times.
 /// </summary>
-public class ScriptBillboard : NetworkBehaviour {
+public class ScriptBillboard : MonoBehaviour {
 
     public Transform playerCamera;
 
