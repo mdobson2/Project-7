@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class ScriptTeamBase : MonoBehaviour {
+public class ScriptTeamBase : MonoBehaviour
+{
 
     public Material redTeamMat;
     public Material blueTeamMat;
@@ -9,9 +11,10 @@ public class ScriptTeamBase : MonoBehaviour {
     public GameObject baseCollider;
     //public bool isFlagHere = true;
 
-	// Use this for initialization
-	void Start () {
-	    if(tag == "RedBase" || tag == "BlueBase")
+    // Use this for initialization
+    void Start()
+    {
+        if (tag == "RedBase" || tag == "BlueBase")
         {
             SetBaseColor(tag);
         }
@@ -19,12 +22,13 @@ public class ScriptTeamBase : MonoBehaviour {
         {
             Debug.LogError("Base is untagged: Tag the base with RedBase or BlueBase to continue");
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void ReturnFlag()
     {
@@ -44,7 +48,7 @@ public class ScriptTeamBase : MonoBehaviour {
 
     public void CheckWinCondition()
     {
-        if(flagPrefab.activeInHierarchy)
+        if (flagPrefab.activeInHierarchy)
         {
             Debug.Log("A winner is found");
         }
