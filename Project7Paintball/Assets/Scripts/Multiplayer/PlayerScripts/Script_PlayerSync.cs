@@ -44,7 +44,7 @@ public class Script_PlayerSync : NetworkBehaviour {
     public Text aboveHeadName;
 
     Quaternion lastPlayerRotation;
-    Vector3 lastPlayerPosition;
+    //Vector3 lastPlayerPosition;
     #endregion
 
 
@@ -71,8 +71,12 @@ public class Script_PlayerSync : NetworkBehaviour {
             CmdSetName(myName);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            GameObject.Find("SpectatorCamera").SetActive(false);
-            if(GameObject.Find("ButtonStartGame") != null)
+            if (GameObject.Find("SpectatorCamera"))
+            {
+                GameObject.Find("SpectatorCamera").SetActive(false);
+            }
+
+            if (GameObject.Find("ButtonStartGame") != null)
             {
                 GameObject.Find("ButtonStartGame").SetActive(false);
             }
@@ -127,7 +131,7 @@ public class Script_PlayerSync : NetworkBehaviour {
     [Client]
     void TransmitPosition()
     {
-        lastPlayerPosition = myTransform.position;
+        //lastPlayerPosition = myTransform.position;
         CmdSendPositionToServer(myTransform.position);
     }
 
