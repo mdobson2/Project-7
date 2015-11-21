@@ -11,6 +11,7 @@ public class ScriptTeamBase : NetworkBehaviour
     public GameObject baseCollider;
     [SyncVar]
     public bool isFlagHere = true;
+    bool currentValue;
 
     // Use this for initialization
     void Start()
@@ -23,29 +24,27 @@ public class ScriptTeamBase : NetworkBehaviour
         {
             Debug.LogError("Base is untagged: Tag the base with RedBase or BlueBase to continue");
         }
+        currentValue = isFlagHere;
     }
 
-    // Update is called once per frame
-
+    void Update()
+    {
+        if(currentValue != isFlagHere)
+        {
+            flagPrefab.SetActive(isFlagHere);
+            currentValue = isFlagHere;
+        }
+    }
 
     public void DisableFlag()
     {
         isFlagHere = false;
-        CmdSetFlagActive(false);
     }
 
     public void ReturnFlag()
     {
         Debug.Log("Returned the flag");
-        flagPrefab.SetActive(true);
-        CmdSetFlagActive(true);
-    }
-
-    [Command]
-    void CmdSetFlagActive(bool pValue)
-    {
-        isFlagHere = pValue;
-        flagPrefab.SetActive(pValue);
+        isFlagHere = true;
     }
 
     void SetBaseColor(string colorKey)

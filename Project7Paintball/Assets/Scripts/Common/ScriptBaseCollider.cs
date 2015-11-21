@@ -1,19 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 //@author Mike Dobson
 
-public class ScriptBaseCollider : MonoBehaviour {
+public class ScriptBaseCollider : NetworkBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    [Command]
+    void CmdReturnFlag()
+    {
+        GetComponentInParent<ScriptTeamBase>().ReturnFlag();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -38,6 +35,9 @@ public class ScriptBaseCollider : MonoBehaviour {
                             //if the player is carrying the red flag at the red base and is on the red team return the flag
                             case false:
                                 GetComponentInParent<ScriptTeamBase>().ReturnFlag();
+                                CmdReturnFlag();
+                                Debug.Log("Command Sent");
+
                                 other.GetComponent<ScriptFlagCatch>().SetFlagCarry(false);
                                 break;
                         }

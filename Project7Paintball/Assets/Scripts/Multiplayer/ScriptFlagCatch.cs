@@ -10,7 +10,6 @@ public class ScriptFlagCatch : NetworkBehaviour
 
     [SyncVar]
     public bool isCarryFlag = false;
-    [SyncVar]
     public GameObject carryFlag;
     public Material redFlag;
     public Material blueFlag;
@@ -21,6 +20,9 @@ public class ScriptFlagCatch : NetworkBehaviour
 
     [SyncVar]
     public bool carryBlueFlag = false;
+
+    string colorKey;
+    bool currentCarryFlag;
     // Use this for initialization
     void Start()
     {
@@ -41,14 +43,28 @@ public class ScriptFlagCatch : NetworkBehaviour
         {
             Debug.LogError("No Red Base in game scene: Add a game object to the scene and tag it RedBase");
         }
-
+        currentCarryFlag = isCarryFlag;
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
+    // Update is called once per frame
+    void Update()
+    {
+        if(currentCarryFlag != isCarryFlag)
+        {
+            carryFlag.SetActive(isCarryFlag);
+            currentCarryFlag = isCarryFlag;
+        }
 
-    //}
+
+        if (colorKey == "RedFlag")
+        {
+            carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = redFlag;
+        }
+        else
+        {
+            carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = blueFlag;
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -61,8 +77,10 @@ public class ScriptFlagCatch : NetworkBehaviour
                 {
                     Debug.Log("Hit the " + other.transform.parent.tag);
                     other.transform.parent.transform.parent.GetComponent<ScriptTeamBase>().DisableFlag();
+                    CmdSendIpickedupMessege(other.transform.parent.transform.parent.gameObject);
                     SetFlagCarry(true);
                     SetFlagColor(other.transform.parent.tag);
+                    CmdSetFlagColor(other.transform.parent.tag);
 
                     if (other.transform.parent.tag == "BlueFlag")
                     {
@@ -80,6 +98,19 @@ public class ScriptFlagCatch : NetworkBehaviour
     }
 
     [Command]
+    void CmdSetFlagColor(string pTag)
+    {
+        SetFlagColor(pTag);
+        colorKey = pTag;
+    }
+
+    [Command]
+    void CmdSendIpickedupMessege(GameObject obj)
+    {
+        obj.GetComponent<ScriptTeamBase>().DisableFlag();
+    }
+
+    [Command]
     void CmdSetCarryBlueFlagBool(bool pValue)
     {
         carryBlueFlag = pValue;
@@ -89,6 +120,7 @@ public class ScriptFlagCatch : NetworkBehaviour
     {
         Debug.Log("Setting the player flag to " + state);
         isCarryFlag = state;
+        CmdSetCaryFlag(isCarryFlag);
 
         if (carryFlag != null)
         {
@@ -101,8 +133,6 @@ public class ScriptFlagCatch : NetworkBehaviour
             {
                 carryFlag.SetActive(false);
             }
-            if (isLocalPlayer)
-                CmdSetCarryFlag(state);
         }
         else
         {
@@ -111,9 +141,9 @@ public class ScriptFlagCatch : NetworkBehaviour
     }
 
     [Command]
-    void CmdSetCarryFlag(bool pValue)
+    void CmdSetCaryFlag(bool pValue)
     {
-        carryFlag.SetActive(pValue);
+        isCarryFlag = pValue;
     }
 
     public void SetFlagColor(string colorKey)
@@ -121,20 +151,12 @@ public class ScriptFlagCatch : NetworkBehaviour
         if (colorKey == "RedFlag")
         {
             carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = redFlag;
-            CmdSetFlagColor(redFlag);
         }
         else
         {
             carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = blueFlag;
-            CmdSetFlagColor(blueFlag);
         }
 
-    }
-
-    [Command]
-    void CmdSetFlagColor(Material pMat)
-    {
-        carryFlag.transform.GetChild(0).GetComponent<Renderer>().material = pMat;
     }
 
     public void DropFlag()

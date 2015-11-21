@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Project7Paintball/Assets/Static Assets/Scenes/PaintballField2/SkyboxProbe-0.exr.meta
 guid: 2ed88f608cbe64641954ed4830af7b6f
 timeCreated: 1448130141
 licenseType: Pro
+=======
+guid: 7447282845adc634f88716754eadec6a
+timeCreated: 1448131308
+licenseType: Free
+>>>>>>> refs/remotes/origin/pr/12:Project7Paintball/Assets/Static Assets/Scenes/PaintballField_a1/SkyboxProbe-0.exr.meta
 TextureImporter:
   fileIDToRecycleName:
     8900000: generatedCubemap
