@@ -44,11 +44,11 @@ public class ScriptFlagCatch : NetworkBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
 
-    }
+    //}
 
     void OnTriggerEnter(Collider other)
     {
@@ -60,7 +60,7 @@ public class ScriptFlagCatch : NetworkBehaviour
                 if (other.transform.parent.tag == "BlueFlag" || other.transform.parent.tag == "RedFlag")
                 {
                     Debug.Log("Hit the " + other.transform.parent.tag);
-                    other.transform.parent.gameObject.SetActive(false);
+                    other.transform.parent.transform.parent.GetComponent<ScriptTeamBase>().DisableFlag();
                     SetFlagCarry(true);
                     SetFlagColor(other.transform.parent.tag);
 
@@ -77,7 +77,6 @@ public class ScriptFlagCatch : NetworkBehaviour
                 }
             }
         }
-
     }
 
     [Command]

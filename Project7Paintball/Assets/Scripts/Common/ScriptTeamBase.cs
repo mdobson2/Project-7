@@ -2,14 +2,15 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class ScriptTeamBase : MonoBehaviour
+public class ScriptTeamBase : NetworkBehaviour
 {
 
     public Material redTeamMat;
     public Material blueTeamMat;
     public GameObject flagPrefab;
     public GameObject baseCollider;
-    //public bool isFlagHere = true;
+    [SyncVar]
+    public bool isFlagHere = true;
 
     // Use this for initialization
     void Start()
@@ -25,15 +26,26 @@ public class ScriptTeamBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
 
+
+    public void DisableFlag()
+    {
+        isFlagHere = false;
+        CmdSetFlagActive(false);
     }
 
     public void ReturnFlag()
     {
         Debug.Log("Returned the flag");
         flagPrefab.SetActive(true);
+        CmdSetFlagActive(true);
+    }
+
+    [Command]
+    void CmdSetFlagActive(bool pValue)
+    {
+        isFlagHere = pValue;
+        flagPrefab.SetActive(pValue);
     }
 
     void SetBaseColor(string colorKey)
