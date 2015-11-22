@@ -14,15 +14,21 @@ public class ScriptPlayerRespawn : NetworkBehaviour {
     private Image crossHairImage;
     private GameObject respawnButton;
 
-	// Use this for initialization
-	void Start () {
+    private GameObject[] blueSpawnPoints;
+    private GameObject[] redSpawnPoints;
+
+    // Use this for initialization
+    void Start () {
+        blueSpawnPoints = GameObject.FindGameObjectsWithTag("BlueSpawn");
+        redSpawnPoints = GameObject.FindGameObjectsWithTag("RedSpawn");
+
         healthScript = GetComponent<Script_PlayerHealth>();
         healthScript.EventRespawn += EnablePlayer;
         crossHairImage = GameObject.Find("SimpleCrosshairImage").GetComponent<Image>();
-        SeRespawnButton();
+        SetRespawnButton();
 	}
 	
-    void SeRespawnButton()
+    void SetRespawnButton()
     {
         if (isLocalPlayer)
         {
@@ -58,6 +64,23 @@ public class ScriptPlayerRespawn : NetworkBehaviour {
             respawnButton.gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        //reset position.
+        if (GetComponent<ScriptPlayerTeam>().myTeam == Team.BLUE)
+        {
+
+            Transform spawnPosition;
+            spawnPosition = blueSpawnPoints[Random.Range(0, blueSpawnPoints.Length)].transform;
+            transform.position = spawnPosition.position;
+            transform.rotation = spawnPosition.rotation;
+        }
+        else if (GetComponent<ScriptPlayerTeam>().myTeam == Team.RED)
+        {
+            Transform spawnPosition;
+            spawnPosition = redSpawnPoints[Random.Range(0, redSpawnPoints.Length)].transform;
+            transform.position = spawnPosition.position;
+            transform.rotation = spawnPosition.rotation;
         }
     }
 
