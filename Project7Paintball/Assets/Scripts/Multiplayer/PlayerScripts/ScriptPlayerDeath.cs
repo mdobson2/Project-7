@@ -41,7 +41,8 @@ public class ScriptPlayerDeath : NetworkBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>().enabled = false;
             crossHairImage.enabled = false;
-            GameObject.Find("GameManager").GetComponent<ScriptGameManager_References>().respawnButton.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<ScriptGameManager_References>().respawnPanel.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<ScriptCountDown>().StartCountDown();
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
